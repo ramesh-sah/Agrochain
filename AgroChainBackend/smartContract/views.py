@@ -21,12 +21,10 @@ class CustomerSmartContractAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except SmartContract.DoesNotExist:
                 return Response({"detail": "Contract not found."}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            # Filter contracts involving the user
-            
-            contracts = SmartContract.objects.all()
-            serializer = SmartContractSerializer(contracts, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        contracts = SmartContract.objects.all()
+        serializer = SmartContractSerializer(contracts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     
 class DistributorSmartContractAPIView(APIView):
