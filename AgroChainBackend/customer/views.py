@@ -4,9 +4,11 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from agrochain.permission import IsCustomer
 
 from customUser.models import User
-from .serializers import CustomerLoginSerializer, CustomerRegistrationSerializer
+from .serializers import CustomerLoginSerializer, CustomerProfileSerializer, CustomerRegistrationSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
@@ -45,3 +47,10 @@ class CustomerLoginView(APIView):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class CustomerProfileView(APIView):
+    permission_classes=[IsAuthenticated,IsCustomer]
+    def get(self,request,format=None):
+        serializer = CustomerProfileSerializer(request.user)
+        return Response(serializer.data,status=status.HTTP_200_OK)

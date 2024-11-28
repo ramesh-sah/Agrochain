@@ -6,9 +6,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from agrochain.permission import IsFarmer
 from customUser.models import User
-from .serializers import FarmerLoginSerializer, FarmerRegistrationSerializer
+from .serializers import FarmerLoginSerializer, FarmerProfileSerializer, FarmerRegistrationSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -47,3 +49,9 @@ class FarmerLoginView(APIView):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class FarmerProfileView(APIView):
+    permission_classes=[IsAuthenticated,IsFarmer]
+    def get(self,request,format=None):
+        serializer = FarmerProfileSerializer(request.user)
+        return Response(serializer.data,status=status.HTTP_200_OK)

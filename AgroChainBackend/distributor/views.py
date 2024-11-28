@@ -6,9 +6,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from agrochain.permission import IsDistributor
 from customUser.models import User
-from .serializers import DistributorLoginSerializer, DistributorRegistrationSerializer
+from .serializers import DistributorLoginSerializer, DistributorProfileSerializer, DistributorRegistrationSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
     
 from django.contrib.auth import authenticate 
 
@@ -48,4 +50,10 @@ class DistributorLoginView(APIView):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class DistributorProfileView(APIView):
+    permission_classes=[IsAuthenticated,IsDistributor]
+    def get(self,request,format=None):
+        serializer = DistributorProfileSerializer(request.user)
+        return Response(serializer.data,status=status.HTTP_200_OK)
                 

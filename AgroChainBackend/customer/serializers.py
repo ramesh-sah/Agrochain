@@ -60,7 +60,7 @@ class CustomerLoginSerializer(serializers.Serializer):
         return attrs
     
     
-class UserProfileSerializer(serializers.ModelSerializer):
+class CustomerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields="__all__"
