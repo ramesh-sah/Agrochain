@@ -34,13 +34,13 @@ class SmartContract(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Approval Fields
-    customer_approved = models.BooleanField(default=False)
+    retailer_approved = models.BooleanField(default=False)
     distributor_approved = models.BooleanField(default=False)
     farmer_approved = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # Automatically set status to True if all approval fields are True
-        if self.customer_approved and self.distributor_approved and self.farmer_approved:
+        if self.retailer_approved and self.distributor_approved and self.farmer_approved:
             self.status = True
         else:
             self.status = False
