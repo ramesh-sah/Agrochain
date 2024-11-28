@@ -13,10 +13,43 @@ class TermsAndConditionsAPIView(APIView):
     """
     List all Terms and Conditions or create a new Terms and Conditions
     """
-    def get(self, request, *args, **kwargs):
+    def get(self, request, pk=None,*args, **kwargs):
+        if pk is not None:
+            terms = self.get_object(pk)
+            if not terms:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = TermsAndConditionsSerializer(terms)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
         terms = TermsAndConditions.objects.all()
         serializer = TermsAndConditionsSerializer(terms, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
+
+
+
+
+class AdminTermsAndConditionsAPIView(APIView):
+    
+    
+    """
+    List all Terms and Conditions or create a new Terms and Conditions
+    """
+    
+    def get(self, request, pk=None,*args, **kwargs):
+        if pk is not None:
+            terms = self.get_object(pk)
+            if not terms:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = TermsAndConditionsSerializer(terms)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
+        terms = TermsAndConditions.objects.all()
+        serializer = TermsAndConditionsSerializer(terms, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
 
     def post(self, request, *args, **kwargs):
         serializer = TermsAndConditionsSerializer(data=request.data)
@@ -25,25 +58,7 @@ class TermsAndConditionsAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-    """
-    Retrieve, update or delete a specific Terms and Conditions.
-    """
-    def get_object(self, pk):
-        try:
-            return TermsAndConditions.objects.get(pk=pk)
-        except TermsAndConditions.DoesNotExist:
-            return None
-
-    def get(self, request, pk, *args, **kwargs):
-        terms = self.get_object(pk)
-        if not terms:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = TermsAndConditionsSerializer(terms)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request, pk, *args, **kwargs):
+    def patch(self, request, pk, *args, **kwargs):
         terms = self.get_object(pk)
         if not terms:
             return Response(status=status.HTTP_404_NOT_FOUND)
