@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     "smartContract",
     "transaction",
     "product",
+    "about",
+    "contact",
+    "termsConditions",
+    
     
     
     
