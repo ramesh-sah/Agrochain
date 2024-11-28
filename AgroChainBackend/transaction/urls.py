@@ -1,13 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import TransactionViewSet
+from django.urls import path
+from .views import TransactionAPIView
 
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-
-router.register(r'transactions', TransactionViewSet)
-
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', include(router.urls)),
+    path('transactions/', TransactionAPIView.as_view(), name='transaction-list-create'),
+    path('transactions/<int:pk>/', TransactionAPIView.as_view(), name='transaction-detail'),
 ]

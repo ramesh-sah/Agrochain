@@ -1,13 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import  SmartContractViewSet
+from django.urls import path
+from .views import SmartContractAPIView
 
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-
-router.register(r'smart-contracts', SmartContractViewSet)
-
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', include(router.urls)),
+    path('smart-contracts/', SmartContractAPIView.as_view(), name='smart-contract-list-create'),
+    path('smart-contracts/<int:pk>/', SmartContractAPIView.as_view(), name='smart-contract-detail'),
 ]
