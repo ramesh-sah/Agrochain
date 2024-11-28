@@ -1,4 +1,5 @@
 
+import os
 from pathlib import Path
 
 from django.conf import settings
@@ -138,6 +139,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Media files (uploaded by users)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -205,6 +211,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 AUTH_USER_MODEL = 'customUser.User'
+
 
 
 

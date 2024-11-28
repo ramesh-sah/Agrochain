@@ -11,6 +11,7 @@ class User(AbstractBaseUser):
         ('customer', 'Customer'),
         ('retailer', 'Retailer'),
         ('distributor', 'Distributor'),
+        ('admin','Admin')
     ]
 
     

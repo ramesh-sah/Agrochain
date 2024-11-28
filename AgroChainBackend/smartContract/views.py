@@ -146,32 +146,4 @@ class FarmerSmartContractAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, pk=None, *args, **kwargs):
-        """
-        Update an entire contract by ID.
-        """
-        try:
-            contract = SmartContract.objects.get(pk=pk)
-        except SmartContract.DoesNotExist:
-            return Response({"detail": "Contract not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        
-        serializer = SmartContractSerializer(contract, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     
-
-    def delete(self, request, pk=None, *args, **kwargs):
-        """
-        Delete a contract by ID.
-        """
-        try:
-            contract = SmartContract.objects.get(pk=pk)
-        except SmartContract.DoesNotExist:
-            return Response({"detail": "Contract not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        contract.delete()
-        return Response({"detail": "Contract deleted successfully."}, status=status.HTTP_204_NO_CONTENT)

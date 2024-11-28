@@ -1,5 +1,4 @@
 from django.db import models
-
 from customUser.models import User
 class Farmer(User):
     
