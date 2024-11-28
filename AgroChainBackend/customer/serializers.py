@@ -58,3 +58,9 @@ class CustomerLoginSerializer(serializers.Serializer):
         
         attrs['user'] = user  # Store the authenticated user in the validated data
         return attrs
+    
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields="__all__"

@@ -39,7 +39,7 @@ class RetailerRegistrationSerializer(UserRegistrationSerializer):
             if store_type:
                 retailer.store_type=store_type
             if inventory_capacity:
-                retailer.inventory_capacity
+                retailer.inventory_capacity=inventory_capacity
                 
             
             retailer.save()
