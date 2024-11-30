@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from distributor.models import Distributor
 from agrochain.permission import IsDistributor
 from customUser.models import User
 from .serializers import DistributorLoginSerializer, DistributorProfileSerializer, DistributorRegistrationSerializer
@@ -56,4 +57,15 @@ class DistributorProfileView(APIView):
     def get(self,request,format=None):
         serializer = DistributorProfileSerializer(request.user)
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+    
+class GetAllDistributor(APIView):
+    """
+    Retrieve all customers from the database.
+    """
+
+    def get(self, request):
+        distributor = Distributor.objects.all()  # Retrieve all Customer records
+        serializer = DistributorProfileSerializer(distributor, many=True)  # Serialize the customer data
+        return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
                 

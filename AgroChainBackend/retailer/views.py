@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
+from retailer.models import Retailer
 from agrochain.permission import IsRetailer
 from customUser.models import User
 from .serializers import RetailerLoginSerializer, RetailerProfileSerializer, RetailerRegistrationSerializer
@@ -56,3 +57,14 @@ class RetailerProfileView(APIView):
     def get(self,request,format=None):
         serializer = RetailerProfileSerializer(request.user)
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+    
+class GetAllRetailer(APIView):
+    """
+    Retrieve all customers from the database.
+    """
+
+    def get(self, request):
+        retailer = Retailer.objects.all()  # Retrieve all Customer records
+        serializer = RetailerProfileSerializer(retailer, many=True)  # Serialize the customer data
+        return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
